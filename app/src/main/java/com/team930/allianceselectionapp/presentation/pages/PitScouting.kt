@@ -127,6 +127,7 @@ fun PitScoutingScreen(viewModel: PitScoutingViewModel = hiltViewModel()) {
                             subtitleText = "Drivetrain",
                             buttonText = selectedTeam?.driveTrain ?: "Select",
                             options = DrivetrainOptions.entries.map(DrivetrainOptions::toString),
+                            isGreenBackground = DrivetrainOptions.fromString(selectedTeam?.driveTrain ?: "") != DrivetrainOptions.OTHER,
                             onOptionSelected = { selectedItem ->
                                 selectedTeam?.let {
                                     viewModel.updateTeam(
@@ -142,6 +143,7 @@ fun PitScoutingScreen(viewModel: PitScoutingViewModel = hiltViewModel()) {
                             buttonText = selectedTeam?.robotWidth?.toString() ?: "Enter Width",
                             subtitleText = "Robot Width",
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            isGreenBackground = selectedTeam?.robotWidth?.let { it > 0 } ?: false,
                             onTextChange = { newWidth ->
                                 selectedTeam?.let {
                                     viewModel.updateTeam(
@@ -149,6 +151,9 @@ fun PitScoutingScreen(viewModel: PitScoutingViewModel = hiltViewModel()) {
                                     )
                                 }
                             },
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .weight(1f)
                         )
                     }
                     Row(

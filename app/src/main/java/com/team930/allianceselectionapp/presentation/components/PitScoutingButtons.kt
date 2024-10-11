@@ -67,6 +67,7 @@ fun CommonPopupButton(
     onButtonClick: () -> Unit,
     onDismissRequest: () -> Unit,
     modalContent: @Composable () -> Unit,
+    backgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -79,7 +80,7 @@ fun CommonPopupButton(
                 .width(150.dp)
                 .aspectRatio(1f)
                 .clip(RoundedCornerShape(25.dp))
-                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .background(backgroundColor)
                 .border(2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(25.dp))
                 .clickable(onClick = onButtonClick),
             contentAlignment = Alignment.Center
@@ -106,10 +107,10 @@ fun TextFieldPopupButton(
     initialText: String = "",
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    isGreenBackground: Boolean = false
 ) {
     var showPopup by remember { mutableStateOf(false) }
-    val textState = remember { mutableStateOf(initialText) }
 
     CommonPopupButton(
         buttonText = buttonText,
@@ -130,7 +131,8 @@ fun TextFieldPopupButton(
                 onDismissRequest = { showPopup = false }
             )
         },
-        modifier = modifier
+        modifier = modifier,
+        backgroundColor = if (isGreenBackground) greenBackground else MaterialTheme.colorScheme.surfaceVariant
     )
 }
 
@@ -140,7 +142,8 @@ fun DropdownPopupButton(
     subtitleText: String,
     options: List<String>,
     onOptionSelected: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isGreenBackground: Boolean = false
 ) {
     var showPopup by remember { mutableStateOf(false) }
 
@@ -160,7 +163,8 @@ fun DropdownPopupButton(
                 onDismissRequest = { showPopup = false }
             )
         },
-        modifier = modifier
+        modifier = modifier,
+        backgroundColor = if (isGreenBackground) greenBackground else MaterialTheme.colorScheme.surfaceVariant
     )
 }
 
@@ -300,8 +304,6 @@ fun GridPreview() {
     val selectedStates = remember { mutableStateOf(List(questions.size) { null as Boolean? }) }
 
     AllianceSelectionTheme {
-
-
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             contentPadding = PaddingValues(16.dp),

@@ -1,5 +1,7 @@
 package com.team930.allianceselectionapp.presentation.model
 
+import java.util.Locale
+
 enum class PitDataStatus {
     COMPLETE,
     INCOMPLETE,
@@ -16,11 +18,11 @@ enum class DrivetrainOptions {
 
     companion object {
         fun fromString(value: String): DrivetrainOptions {
-            return when (value) {
-                "Mecanum" -> MECANUM
-                "Omni" -> OMNI
-                "Tank" -> TANK
-                "Swerve" -> SWERVE
+            return when (value.lowercase(Locale.getDefault())) {
+                "mecanum" -> MECANUM
+                "omni" -> OMNI
+                "tank" -> TANK
+                "swerve" -> SWERVE
                 else -> OTHER
             }
         }
